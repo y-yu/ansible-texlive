@@ -1,0 +1,19 @@
+galaxy_info:
+  author: Yuu YOSHIMURA
+  description: TeXLive Installer
+  license: MIT
+  min_ansible_version: 2.0
+  platforms:
+    - name: OSX
+      versions:
+        - all
+    - name: Ubuntu
+      versions:
+        - trusty
+  galaxy_tags:
+    - texlive
+    - tex
+    - latex
+  categories:
+    - system
+dependencies: []
