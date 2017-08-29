@@ -1,6 +1,6 @@
 galaxy_info:
   author: Yuu YOSHIMURA
-  description: TeXLive Installer
+  description: TeXLive Install Role for Linux and macOS
   license: MIT
   min_ansible_version: 2.0
   platforms:
