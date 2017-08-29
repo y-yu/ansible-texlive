@@ -5,9 +5,11 @@
   get_url:
     url: "{{ texlive_mirror }}/install-tl-unx.tar.gz"
     dest: /tmp/install-tl-unx.tar.gz
+  when: scheme != "full"
 
 - name: "Unarchive TeXLive Installer"
   shell: tar -xf /tmp/install-tl-unx.tar.gz -C /tmp
+  when: scheme != "full"
 
 - name: "Rsync TeXLive Repository"
   shell: "rsync -a --no-perms --no-owner --no-group --delete --exclude=mactex* --partial {{ texlive_rsync }} /tmp/tlnet"
@@ -24,7 +26,7 @@
     state: directory
 
 - name: "Install TeXLive from Local"
-  shell: cd /tmp/install-tl-* && ./install-tl -profile /tmp/install-tl.profile -repository /tmp/tlnet
+  shell: cd /tmp/tlnet && chmod +x install-tl && ./install-tl -profile /tmp/install-tl.profile -repository /tmp/tlnet
   when: scheme == "full"
 
 - name: "Install TeXLive from Remote"

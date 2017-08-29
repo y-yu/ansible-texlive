@@ -14,6 +14,5 @@ galaxy_info:
     - texlive
     - tex
     - latex
-  categories:
     - system
 dependencies: []
