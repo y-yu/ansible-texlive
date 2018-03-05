@@ -5,15 +5,15 @@
   get_url:
     url: "{{ texlive_mirror }}/install-tl-unx.tar.gz"
     dest: /tmp/install-tl-unx.tar.gz
-  when: scheme != "full"
+  when: texlive_rsync is not defined
 
 - name: "Unarchive TeXLive Installer"
   shell: tar -xf /tmp/install-tl-unx.tar.gz -C /tmp
-  when: scheme != "full"
+  when: texlive_rsync is not defined
 
 - name: "Rsync TeXLive Repository"
   shell: "rsync -a --no-perms --no-owner --no-group --delete --exclude=mactex* --partial {{ texlive_rsync }} /tmp/tlnet"
-  when: scheme == "full" and texlive_rsync is defined
+  when: texlive_rsync is defined
 
 - name: "Create Profile"
   template:
@@ -27,11 +27,11 @@
 
 - name: "Install TeXLive from Local"
   shell: cd /tmp/tlnet && chmod +x install-tl && ./install-tl -profile /tmp/install-tl.profile -repository /tmp/tlnet
-  when: scheme == "full"
+  when: texlive_rsync is defined
 
 - name: "Install TeXLive from Remote"
   shell: "cd /tmp/install-tl-* && ./install-tl -profile /tmp/install-tl.profile -repository {{ texlive_mirror }}" 
-  when: scheme != "full" 
+  when: texlive_rsync is not defined
 
 - name: "Show LaTeX Version"
   shell: latex -v
