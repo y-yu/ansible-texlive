@@ -2,18 +2,30 @@ matrix:
   include:
     - os: osx
       language: generic
+      env:
+        - ANSIBLE_VERSION="2.4.3.0" TEST_DIR="use_rsync"
+    - os: osx
+      language: generic
+      env:
+        - ANSIBLE_VERSION="2.4.3.0" TEST_DIR="no_rsync"
     - os: linux
       language: python
       dist: trusty
       python: "2.7"
-env:
-  - ANSIBLE_VERSION="2.3.2.0"
+      env:
+        - ANSIBLE_VERSION="2.4.3.0" TEST_DIR="use_rsync"
+    - os: linux
+      language: python
+      dist: trusty
+      python: "2.7"
+      env:
+        - ANSIBLE_VERSION="2.4.3.0" TEST_DIR="no_rsync"
 install:
   - pip install ansible=="$ANSIBLE_VERSION"
 before_script:
   - ansible --version
 script:
-  - ansible-playbook -i tests/inventory tests/test.yml --syntax-check
-  - ansible-playbook -i tests/inventory tests/test.yml --connection=local --sudo
+  - ansible-playbook -i tests/inventory "tests/${TEST_DIR}/test.yml" --syntax-check
+  - ansible-playbook -i tests/inventory "tests/${TEST_DIR}/test.yml" --connection=local --sudo
 notifications:
   webhooks: https://galaxy.ansible.com/api/v1/notifications/

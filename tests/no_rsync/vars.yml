@@ -1,0 +1,3 @@
+texlive_mirror:
+  http://ctan.mirror.rafal.ca/systems/texlive/tlnet
+texlive_rsync:
